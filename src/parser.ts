@@ -25,7 +25,7 @@ export function parse(tokens: Token[]): Expr {
       return inner;
     }
     if (token.type === 'ident') {
-      pos++; // skip the opening parenthesis
+      expectToken('lparen', '(');
       const args: Expr[] = [];
       if (tokens[pos]?.type !== 'rparen') {
         args.push(parseExpression());
