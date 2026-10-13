@@ -80,4 +80,8 @@ describe('parse', () => {
   it("requires ')' to close a parenthesised expression", () => {
     expect(() => parse([lparen, num('1'), num('2'), rparen])).toThrow("Expected ')' but found '2'");
   });
+
+  it("reports an unclosed '(' as running out of input", () => {
+    expect(() => parse([lparen, num('1')])).toThrow("Expected ')' but reached end of input");
+  });
 });
