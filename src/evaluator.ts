@@ -27,7 +27,11 @@ export class Evaluator {
         return -this.evaluate(expr.operand);
       case 'call': {
         const fn = this.functions.get(expr.name);
-        if (!fn) throw new Error(`Unknown function '${expr.name}'`);
+        if (!fn) {
+          const message = `Unknown function '${expr.name}'`;
+          this.logger.warn(message);
+          throw new Error(message);
+        }
         const args = expr.args.map((arg) => this.evaluate(arg));
         const result = fn(...args);
         this.logger.debug(`${expr.name}(${args.join(', ')}) = ${result}`);
