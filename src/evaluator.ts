@@ -26,7 +26,8 @@ export class Evaluator {
       case 'unary':
         return -this.evaluate(expr.operand);
       case 'call': {
-        const fn = this.functions.get(expr.name)!;
+        const fn = this.functions.get(expr.name);
+        if (!fn) throw new Error(`Unknown function '${expr.name}'`);
         return fn(...expr.args.map((arg) => this.evaluate(arg)));
       }
       case 'binary': {
