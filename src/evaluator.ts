@@ -32,6 +32,7 @@ export class Evaluator {
         case '*':
           return left * right;
         case '/':
+          if (right === 0) throw new Error('Division by zero');
           return left / right;
       }
     }
