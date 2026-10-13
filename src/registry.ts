@@ -11,3 +11,8 @@ export class FunctionRegistry implements FunctionLookup {
     return this.functions.get(name);
   }
 }
+
+// Compile-only stub: an empty registry until the default-functions test drives the real thing.
+export function createDefaultRegistry(): FunctionRegistry {
+  return new FunctionRegistry();
+}
