@@ -1,5 +1,6 @@
-import { Evaluator } from './evaluator';
+import { Evaluator, Logger } from './evaluator';
 import { Expr, parse } from './parser';
+import { createDefaultRegistry } from './registry';
 import { Token, tokenize } from './tokenizer';
 
 export interface CalculatorDeps {
@@ -17,7 +18,9 @@ export class Calculator {
   }
 }
 
-// Compile-only stub: real tokenizer and parser, but an evaluator that always answers 0.
+const silentLogger: Logger = { debug: () => {}, warn: () => {} };
+
 export function createCalculator(): Calculator {
-  return new Calculator({ tokenize, parse, evaluator: { evaluate: () => 0 } });
+  const evaluator = new Evaluator(createDefaultRegistry(), silentLogger);
+  return new Calculator({ tokenize, parse, evaluator });
 }
