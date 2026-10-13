@@ -68,4 +68,13 @@ describe('Evaluator', () => {
     expect(logger.debug).toHaveBeenCalledTimes(1);
     expect(logger.debug).toHaveBeenCalledWith('f(1, 5) = 99');
   });
+
+  it('warns through the injected logger when a function is unknown', () => {
+    registry.get.mockReturnValue(undefined);
+
+    expect(() => evaluator.evaluate(call('nope'))).toThrow("Unknown function 'nope'");
+
+    expect(logger.warn).toHaveBeenCalledWith("Unknown function 'nope'");
+    expect(logger.debug).not.toHaveBeenCalled();
+  });
 });
