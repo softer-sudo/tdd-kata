@@ -20,4 +20,8 @@ describe('tokenize', () => {
       { type: 'number', text: '2' },
     ]);
   });
+
+  it('keeps a decimal point inside a number token', () => {
+    expect(tokenize('3.14')).toEqual([{ type: 'number', text: '3.14' }]);
+  });
 });
