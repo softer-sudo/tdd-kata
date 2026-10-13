@@ -8,6 +8,7 @@ const logger: jest.Mocked<Logger> = { debug: jest.fn(), warn: jest.fn() };
 // ASTs are built by hand so these tests stay independent of the parser.
 const n = (value: number): Expr => ({ type: 'number', value });
 const bin = (op: BinaryOp, left: Expr, right: Expr): Expr => ({ type: 'binary', op, left, right });
+const neg = (operand: Expr): Expr => ({ type: 'unary', op: '-', operand });
 
 let evaluator: Evaluator;
 
@@ -35,5 +36,9 @@ describe('Evaluator', () => {
 
   it('rejects division by zero instead of returning Infinity', () => {
     expect(() => evaluator.evaluate(bin('/', n(1), n(0)))).toThrow('Division by zero');
+  });
+
+  it('negates the operand of a unary minus', () => {
+    expect(evaluator.evaluate(neg(bin('+', n(2), n(3))))).toBe(-5);
   });
 });
