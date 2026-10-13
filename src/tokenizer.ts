@@ -1,10 +1,24 @@
-export type TokenType = 'number';
+export type TokenType = 'number' | 'operator';
 
 export interface Token {
   type: TokenType;
   text: string;
 }
 
+const isDigit = (char: string): boolean => char >= '0' && char <= '9';
+
 export function tokenize(input: string): Token[] {
-  return [{ type: 'number', text: input }];
+  const tokens: Token[] = [];
+  let pos = 0;
+  while (pos < input.length) {
+    if (isDigit(input[pos])) {
+      const start = pos;
+      while (pos < input.length && isDigit(input[pos])) pos++;
+      tokens.push({ type: 'number', text: input.slice(start, pos) });
+    } else {
+      tokens.push({ type: 'operator', text: input[pos] });
+      pos++;
+    }
+  }
+  return tokens;
 }
