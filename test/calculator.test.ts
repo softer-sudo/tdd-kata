@@ -1,3 +1,4 @@
+import * as kata from '../src';
 import { Calculator, createCalculator } from '../src';
 import { FunctionLookup } from '../src/evaluator';
 import { Expr } from '../src/parser';
@@ -44,5 +45,21 @@ describe('createCalculator (composition root: real parts wired together)', () =>
 
   it('lets evaluator errors surface through the default wiring', () => {
     expect(() => createCalculator().calculate('nope(1)')).toThrow("Unknown function 'nope'");
+  });
+});
+
+describe('public API (the package entry point)', () => {
+  it('exports what a user needs to build and extend a calculator', () => {
+    expect(kata).toEqual(
+      expect.objectContaining({
+        Calculator: expect.any(Function),
+        createCalculator: expect.any(Function),
+        Evaluator: expect.any(Function),
+        FunctionRegistry: expect.any(Function),
+        createDefaultRegistry: expect.any(Function),
+        tokenize: expect.any(Function),
+        parse: expect.any(Function),
+      }),
+    );
   });
 });
