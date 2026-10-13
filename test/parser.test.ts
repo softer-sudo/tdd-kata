@@ -60,4 +60,8 @@ describe('parse', () => {
       args: [n(1), bin('+', n(2), n(3))],
     });
   });
+
+  it('parses a function call with no arguments', () => {
+    expect(parse([ident('pi'), lparen, rparen])).toEqual({ type: 'call', name: 'pi', args: [] });
+  });
 });
