@@ -12,7 +12,11 @@ export class FunctionRegistry implements FunctionLookup {
   }
 }
 
-// Compile-only stub: an empty registry until the default-functions test drives the real thing.
 export function createDefaultRegistry(): FunctionRegistry {
-  return new FunctionRegistry();
+  const registry = new FunctionRegistry();
+  registry.register('abs', Math.abs);
+  registry.register('sqrt', Math.sqrt);
+  registry.register('max', Math.max);
+  registry.register('min', Math.min);
+  return registry;
 }
