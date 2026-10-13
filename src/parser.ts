@@ -30,7 +30,8 @@ export function parse(tokens: Token[]): Expr {
       pos++; // skip the closing parenthesis
       return { type: 'call', name: token.text, args };
     }
-    return { type: 'number', value: Number(token.text) };
+    if (token.type === 'number') return { type: 'number', value: Number(token.text) };
+    throw new Error(`Unexpected token '${token.text}'`);
   };
 
   const parseUnary = (): Expr => {
