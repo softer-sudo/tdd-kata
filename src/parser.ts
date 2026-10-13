@@ -1,4 +1,4 @@
-import { Token } from './tokenizer';
+import { Token, TokenType } from './tokenizer';
 
 export type Expr =
   | { type: 'number'; value: number }
@@ -9,15 +9,19 @@ export type Expr =
 export function parse(tokens: Token[]): Expr {
   let pos = 0;
 
+  const expectToken = (type: TokenType, symbol: string): void => {
+    const token = tokens[pos];
+    if (!token) throw new Error(`Expected '${symbol}' but reached end of input`);
+    if (token.type !== type) throw new Error(`Expected '${symbol}' but found '${token.text}'`);
+    pos++;
+  };
+
   const parsePrimary = (): Expr => {
     const token = tokens[pos++];
     if (!token) throw new Error('Unexpected end of input');
     if (token.type === 'lparen') {
       const inner = parseExpression();
-      if (tokens[pos]?.type !== 'rparen') {
-        throw new Error(`Expected ')' but found '${tokens[pos]?.text}'`);
-      }
-      pos++;
+      expectToken('rparen', ')');
       return inner;
     }
     if (token.type === 'ident') {
