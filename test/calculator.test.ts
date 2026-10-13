@@ -1,8 +1,5 @@
 import * as kata from '../src';
-import { Calculator, createCalculator } from '../src';
-import { FunctionLookup } from '../src/evaluator';
-import { Expr } from '../src/parser';
-import { Token } from '../src/tokenizer';
+import { Calculator, createCalculator, Expr, FunctionLookup, Token } from '../src';
 
 describe('Calculator (every pipeline stage is injected and mocked)', () => {
   it('passes the source through tokenize, parse and evaluate, returning the evaluator result', () => {
