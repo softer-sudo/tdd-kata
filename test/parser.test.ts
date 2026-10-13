@@ -64,4 +64,8 @@ describe('parse', () => {
   it('parses a function call with no arguments', () => {
     expect(parse([ident('pi'), lparen, rparen])).toEqual({ type: 'call', name: 'pi', args: [] });
   });
+
+  it('reports running out of tokens mid-expression', () => {
+    expect(() => parse([num('1'), op('+')])).toThrow('Unexpected end of input');
+  });
 });
