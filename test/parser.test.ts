@@ -4,6 +4,8 @@ import { Token } from '../src/tokenizer';
 // Tokens are built by hand so these tests stay independent of the tokenizer.
 const num = (text: string): Token => ({ type: 'number', text });
 const op = (text: string): Token => ({ type: 'operator', text });
+const lparen: Token = { type: 'lparen', text: '(' };
+const rparen: Token = { type: 'rparen', text: ')' };
 
 // Expected trees are spelled out with these literal builders.
 const n = (value: number): Expr => ({ type: 'number', value });
@@ -33,5 +35,10 @@ describe('parse', () => {
     expect(parse([num('1'), op('+'), num('2'), op('*'), num('3')])).toEqual(
       bin('+', n(1), bin('*', n(2), n(3))),
     );
+  });
+
+  it('lets parentheses override precedence', () => {
+    const tokens = [lparen, num('1'), op('+'), num('2'), rparen, op('*'), num('3')];
+    expect(parse(tokens)).toEqual(bin('*', bin('+', n(1), n(2)), n(3)));
   });
 });
