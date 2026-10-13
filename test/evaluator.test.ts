@@ -59,4 +59,13 @@ describe('Evaluator', () => {
 
     expect(() => evaluator.evaluate(call('nope', n(1)))).toThrow("Unknown function 'nope'");
   });
+
+  it('reports each successful call to the injected logger', () => {
+    registry.get.mockReturnValue(jest.fn().mockReturnValue(99));
+
+    evaluator.evaluate(call('f', n(1), bin('+', n(2), n(3))));
+
+    expect(logger.debug).toHaveBeenCalledTimes(1);
+    expect(logger.debug).toHaveBeenCalledWith('f(1, 5) = 99');
+  });
 });
