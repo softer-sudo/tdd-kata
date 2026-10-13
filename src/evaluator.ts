@@ -13,14 +13,14 @@ export interface Logger {
   warn(message: string): void;
 }
 
-// Compile-only stub: gives the first evaluator test something to fail against.
 export class Evaluator {
   constructor(
     private readonly functions: FunctionLookup,
     private readonly logger: Logger,
   ) {}
 
-  evaluate(_expr: Expr): number {
-    return 0;
+  evaluate(expr: Expr): number {
+    if (expr.type === 'number') return expr.value;
+    throw new Error(`Cannot evaluate '${expr.type}' nodes yet`);
   }
 }
