@@ -5,7 +5,7 @@ export interface Token {
   text: string;
 }
 
-const isDigit = (char: string): boolean => char >= '0' && char <= '9';
+const isNumberChar = (char: string): boolean => (char >= '0' && char <= '9') || char === '.';
 
 export function tokenize(input: string): Token[] {
   const tokens: Token[] = [];
@@ -13,9 +13,9 @@ export function tokenize(input: string): Token[] {
   while (pos < input.length) {
     if (/\s/.test(input[pos])) {
       pos++;
-    } else if (isDigit(input[pos])) {
+    } else if (isNumberChar(input[pos])) {
       const start = pos;
-      while (pos < input.length && isDigit(input[pos])) pos++;
+      while (pos < input.length && isNumberChar(input[pos])) pos++;
       tokens.push({ type: 'number', text: input.slice(start, pos) });
     } else {
       tokens.push({ type: 'operator', text: input[pos] });
