@@ -11,7 +11,9 @@ export function tokenize(input: string): Token[] {
   const tokens: Token[] = [];
   let pos = 0;
   while (pos < input.length) {
-    if (isDigit(input[pos])) {
+    if (/\s/.test(input[pos])) {
+      pos++;
+    } else if (isDigit(input[pos])) {
       const start = pos;
       while (pos < input.length && isDigit(input[pos])) pos++;
       tokens.push({ type: 'number', text: input.slice(start, pos) });
