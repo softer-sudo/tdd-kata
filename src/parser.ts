@@ -55,5 +55,7 @@ export function parse(tokens: Token[]): Expr {
   const parseTerm = (): Expr => parseChain(['*', '/'], parseUnary);
   const parseExpression = (): Expr => parseChain(['+', '-'], parseTerm);
 
-  return parseExpression();
+  const expr = parseExpression();
+  if (pos < tokens.length) throw new Error(`Unexpected token '${tokens[pos].text}'`);
+  return expr;
 }
