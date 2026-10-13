@@ -68,4 +68,8 @@ describe('parse', () => {
   it('reports running out of tokens mid-expression', () => {
     expect(() => parse([num('1'), op('+')])).toThrow('Unexpected end of input');
   });
+
+  it('rejects a token that cannot start an operand', () => {
+    expect(() => parse([op('*'), num('2')])).toThrow("Unexpected token '*'");
+  });
 });
