@@ -25,8 +25,8 @@ export interface CalculatorOptions {
   logger?: Logger;
 }
 
-// The options parameter is declared but not honoured yet: the next test drives that.
-export function createCalculator(_options: CalculatorOptions = {}): Calculator {
-  const evaluator = new Evaluator(createDefaultRegistry(), silentLogger);
+export function createCalculator(options: CalculatorOptions = {}): Calculator {
+  const { registry = createDefaultRegistry(), logger = silentLogger } = options;
+  const evaluator = new Evaluator(registry, logger);
   return new Calculator({ tokenize, parse, evaluator });
 }
