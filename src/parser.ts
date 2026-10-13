@@ -14,7 +14,10 @@ export function parse(tokens: Token[]): Expr {
     if (!token) throw new Error('Unexpected end of input');
     if (token.type === 'lparen') {
       const inner = parseExpression();
-      pos++; // skip the closing parenthesis
+      if (tokens[pos]?.type !== 'rparen') {
+        throw new Error(`Expected ')' but found '${tokens[pos]?.text}'`);
+      }
+      pos++;
       return inner;
     }
     if (token.type === 'ident') {
