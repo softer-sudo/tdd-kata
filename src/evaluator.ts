@@ -21,6 +21,7 @@ export class Evaluator {
 
   evaluate(expr: Expr): number {
     if (expr.type === 'number') return expr.value;
+    if (expr.type === 'unary') return -this.evaluate(expr.operand);
     if (expr.type === 'binary') {
       const left = this.evaluate(expr.left);
       const right = this.evaluate(expr.right);
