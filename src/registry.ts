@@ -1,10 +1,13 @@
 import { FunctionLookup, MathFunction } from './evaluator';
 
-// Compile-only stub: gives the first registry test something to fail against.
 export class FunctionRegistry implements FunctionLookup {
-  register(_name: string, _fn: MathFunction): void {}
+  private readonly functions = new Map<string, MathFunction>();
 
-  get(_name: string): MathFunction | undefined {
-    return undefined;
+  register(name: string, fn: MathFunction): void {
+    this.functions.set(name, fn);
+  }
+
+  get(name: string): MathFunction | undefined {
+    return this.functions.get(name);
   }
 }
