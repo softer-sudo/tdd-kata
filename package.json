@@ -1,0 +1,37 @@
+{
+  "name": "tdd-kata",
+  "version": "1.0.0",
+  "description": "A tiny arithmetic expression parser/evaluator built strictly test-first (TDD).",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.6.5",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.14",
+    "typescript": "~5.9.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
+  }
+}
