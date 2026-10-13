@@ -1,4 +1,4 @@
-import { Calculator } from '../src';
+import { Calculator, createCalculator } from '../src';
 import { Expr } from '../src/parser';
 import { Token } from '../src/tokenizer';
 
@@ -17,5 +17,15 @@ describe('Calculator (every pipeline stage is injected and mocked)', () => {
     expect(parse).toHaveBeenCalledWith(tokens);
     expect(evaluate).toHaveBeenCalledWith(ast);
     expect(result).toBe(123);
+  });
+});
+
+describe('createCalculator (composition root: real parts wired together)', () => {
+  it.each([
+    ['2 + 3 * 4', 14],
+    ['max(1, 2 + 3) * -2', -10],
+    ['(1 + 2) * sqrt(16) / 4', 3],
+  ])('evaluates %s', (source, expected) => {
+    expect(createCalculator().calculate(source)).toBe(expected);
   });
 });

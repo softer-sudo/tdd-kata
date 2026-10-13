@@ -1,6 +1,6 @@
 import { Evaluator } from './evaluator';
-import { Expr } from './parser';
-import { Token } from './tokenizer';
+import { Expr, parse } from './parser';
+import { Token, tokenize } from './tokenizer';
 
 export interface CalculatorDeps {
   tokenize: (input: string) => Token[];
@@ -15,4 +15,9 @@ export class Calculator {
     const { tokenize, parse, evaluator } = this.deps;
     return evaluator.evaluate(parse(tokenize(input)));
   }
+}
+
+// Compile-only stub: real tokenizer and parser, but an evaluator that always answers 0.
+export function createCalculator(): Calculator {
+  return new Calculator({ tokenize, parse, evaluator: { evaluate: () => 0 } });
 }
