@@ -34,4 +34,13 @@ describe('tokenize', () => {
       { type: 'rparen', text: ')' },
     ]);
   });
+
+  it('reads a run of letters, digits and underscores as one identifier', () => {
+    expect(tokenize('log_2(8)')).toEqual([
+      { type: 'ident', text: 'log_2' },
+      { type: 'lparen', text: '(' },
+      { type: 'number', text: '8' },
+      { type: 'rparen', text: ')' },
+    ]);
+  });
 });
