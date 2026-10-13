@@ -4,4 +4,12 @@ describe('tokenize', () => {
   it('turns a single integer into a number token', () => {
     expect(tokenize('42')).toEqual([{ type: 'number', text: '42' }]);
   });
+
+  it('separates numbers and operators', () => {
+    expect(tokenize('1+23')).toEqual([
+      { type: 'number', text: '1' },
+      { type: 'operator', text: '+' },
+      { type: 'number', text: '23' },
+    ]);
+  });
 });
