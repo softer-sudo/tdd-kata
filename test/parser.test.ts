@@ -1,7 +1,6 @@
 import { BinaryOp, Expr, parse } from '../src/parser';
 import { Token } from '../src/tokenizer';
 
-// Tokens are built by hand so these tests stay independent of the tokenizer.
 const num = (text: string): Token => ({ type: 'number', text });
 const op = (text: string): Token => ({ type: 'operator', text });
 const ident = (text: string): Token => ({ type: 'ident', text });
@@ -9,7 +8,6 @@ const comma: Token = { type: 'comma', text: ',' };
 const lparen: Token = { type: 'lparen', text: '(' };
 const rparen: Token = { type: 'rparen', text: ')' };
 
-// Expected trees are spelled out with these literal builders.
 const n = (value: number): Expr => ({ type: 'number', value });
 const bin = (symbol: BinaryOp, left: Expr, right: Expr): Expr => ({ type: 'binary', op: symbol, left, right });
 const neg = (operand: Expr): Expr => ({ type: 'unary', op: '-', operand });

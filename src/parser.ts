@@ -20,7 +20,6 @@ export function parse(tokens: Token[]): Expr {
 
   const peekType = (): TokenType | undefined => tokens[pos]?.type;
 
-  // Returns the next operator if it is one of `ops`, without consuming it.
   const peekOp = <T extends string>(ops: readonly T[]): T | undefined =>
     ops.find((op) => op === tokens[pos]?.text);
 
@@ -66,7 +65,6 @@ export function parse(tokens: Token[]): Expr {
     return parsePrimary();
   };
 
-  // Left-associative chain of `operand (op operand)*` for the given operators.
   const parseChain = (ops: readonly BinaryOp[], parseOperand: () => Expr): Expr => {
     let left = parseOperand();
     for (let op = peekOp(ops); op; op = peekOp(ops)) {
