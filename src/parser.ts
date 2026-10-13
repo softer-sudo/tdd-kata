@@ -7,7 +7,11 @@ export type Expr =
 const toNumber = (token: Token): Expr => ({ type: 'number', value: Number(token.text) });
 
 export function parse(tokens: Token[]): Expr {
-  const left = toNumber(tokens[0]);
-  if (tokens.length === 1) return left;
-  return { type: 'binary', op: tokens[1].text, left, right: toNumber(tokens[2]) };
+  let pos = 0;
+  let left = toNumber(tokens[pos++]);
+  while (pos < tokens.length) {
+    const op = tokens[pos++].text;
+    left = { type: 'binary', op, left, right: toNumber(tokens[pos++]) };
+  }
+  return left;
 }
