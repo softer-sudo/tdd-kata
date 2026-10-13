@@ -76,4 +76,8 @@ describe('parse', () => {
   it('rejects tokens left over after a complete expression', () => {
     expect(() => parse([num('1'), num('2')])).toThrow("Unexpected token '2'");
   });
+
+  it("requires ')' to close a parenthesised expression", () => {
+    expect(() => parse([lparen, num('1'), num('2'), rparen])).toThrow("Expected ')' but found '2'");
+  });
 });
