@@ -24,4 +24,12 @@ describe('Evaluator', () => {
   it('adds the operands of a + node', () => {
     expect(evaluator.evaluate(bin('+', n(1), n(2)))).toBe(3);
   });
+
+  it.each([
+    ['-', 7, 2, 5],
+    ['*', 3, 4, 12],
+    ['/', 8, 2, 4],
+  ] as const)('applies the %s operator', (op, left, right, expected) => {
+    expect(evaluator.evaluate(bin(op, n(left), n(right)))).toBe(expected);
+  });
 });
