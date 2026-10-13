@@ -12,4 +12,12 @@ describe('tokenize', () => {
       { type: 'number', text: '23' },
     ]);
   });
+
+  it('ignores whitespace between tokens', () => {
+    expect(tokenize(' 1 \t+  2 ')).toEqual([
+      { type: 'number', text: '1' },
+      { type: 'operator', text: '+' },
+      { type: 'number', text: '2' },
+    ]);
+  });
 });
