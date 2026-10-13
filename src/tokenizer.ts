@@ -26,9 +26,11 @@ export function tokenize(input: string): Token[] {
     } else if (input[pos] in PUNCTUATION) {
       tokens.push({ type: PUNCTUATION[input[pos]], text: input[pos] });
       pos++;
-    } else {
+    } else if ('+-*/'.includes(input[pos])) {
       tokens.push({ type: 'operator', text: input[pos] });
       pos++;
+    } else {
+      throw new Error(`Unexpected character '${input[pos]}' at position ${pos}`);
     }
   }
   return tokens;
