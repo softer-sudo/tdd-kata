@@ -1,4 +1,4 @@
-import { Evaluator, Logger } from './evaluator';
+import { Evaluator, FunctionLookup, Logger } from './evaluator';
 import { Expr, parse } from './parser';
 import { createDefaultRegistry } from './registry';
 import { Token, tokenize } from './tokenizer';
@@ -20,7 +20,13 @@ export class Calculator {
 
 const silentLogger: Logger = { debug: () => {}, warn: () => {} };
 
-export function createCalculator(): Calculator {
+export interface CalculatorOptions {
+  registry?: FunctionLookup;
+  logger?: Logger;
+}
+
+// The options parameter is declared but not honoured yet: the next test drives that.
+export function createCalculator(_options: CalculatorOptions = {}): Calculator {
   const evaluator = new Evaluator(createDefaultRegistry(), silentLogger);
   return new Calculator({ tokenize, parse, evaluator });
 }
