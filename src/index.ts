@@ -1,7 +1,12 @@
 import { Evaluator, FunctionLookup, Logger } from './evaluator';
 import { Expr, parse } from './parser';
-import { createDefaultRegistry } from './registry';
+import { createDefaultRegistry, FunctionRegistry } from './registry';
 import { Token, tokenize } from './tokenizer';
+
+export { Evaluator, FunctionRegistry, createDefaultRegistry, parse, tokenize };
+export type { FunctionLookup, Logger, MathFunction } from './evaluator';
+export type { BinaryOp, Expr } from './parser';
+export type { Token, TokenType } from './tokenizer';
 
 export interface CalculatorDeps {
   tokenize: (input: string) => Token[];
