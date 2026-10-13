@@ -4,6 +4,8 @@ import { Token } from '../src/tokenizer';
 // Tokens are built by hand so these tests stay independent of the tokenizer.
 const num = (text: string): Token => ({ type: 'number', text });
 const op = (text: string): Token => ({ type: 'operator', text });
+const ident = (text: string): Token => ({ type: 'ident', text });
+const comma: Token = { type: 'comma', text: ',' };
 const lparen: Token = { type: 'lparen', text: '(' };
 const rparen: Token = { type: 'rparen', text: ')' };
 
@@ -48,5 +50,14 @@ describe('parse', () => {
     ['after an operator', [num('2'), op('*'), op('-'), num('3')], bin('*', n(2), neg(n(3)))],
   ])('turns a minus %s into a unary node', (_where, tokens, expected) => {
     expect(parse(tokens)).toEqual(expected);
+  });
+
+  it('parses a function call with comma-separated arguments', () => {
+    const tokens = [ident('max'), lparen, num('1'), comma, num('2'), op('+'), num('3'), rparen];
+    expect(parse(tokens)).toEqual({
+      type: 'call',
+      name: 'max',
+      args: [n(1), bin('+', n(2), n(3))],
+    });
   });
 });

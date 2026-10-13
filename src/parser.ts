@@ -3,6 +3,7 @@ import { Token } from './tokenizer';
 export type Expr =
   | { type: 'number'; value: number }
   | { type: 'unary'; op: '-'; operand: Expr }
+  | { type: 'call'; name: string; args: Expr[] }
   | { type: 'binary'; op: string; left: Expr; right: Expr };
 
 export function parse(tokens: Token[]): Expr {
