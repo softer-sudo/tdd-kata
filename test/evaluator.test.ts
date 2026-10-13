@@ -53,4 +53,10 @@ describe('Evaluator', () => {
     expect(fn).toHaveBeenCalledWith(1, 5);
     expect(result).toBe(99);
   });
+
+  it('rejects a call to a function the registry does not know', () => {
+    registry.get.mockReturnValue(undefined);
+
+    expect(() => evaluator.evaluate(call('nope', n(1)))).toThrow("Unknown function 'nope'");
+  });
 });
