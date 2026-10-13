@@ -11,6 +11,7 @@ export function parse(tokens: Token[]): Expr {
 
   const parsePrimary = (): Expr => {
     const token = tokens[pos++];
+    if (!token) throw new Error('Unexpected end of input');
     if (token.type === 'lparen') {
       const inner = parseExpression();
       pos++; // skip the closing parenthesis
