@@ -84,4 +84,8 @@ describe('parse', () => {
   it("reports an unclosed '(' as running out of input", () => {
     expect(() => parse([lparen, num('1')])).toThrow("Expected ')' but reached end of input");
   });
+
+  it("requires ')' to close a call's argument list", () => {
+    expect(() => parse([ident('max'), lparen, num('1')])).toThrow("Expected ')' but reached end of input");
+  });
 });
