@@ -1,4 +1,4 @@
-export type TokenType = 'number' | 'operator';
+export type TokenType = 'number' | 'operator' | 'lparen' | 'rparen' | 'comma';
 
 export interface Token {
   type: TokenType;
@@ -6,6 +6,8 @@ export interface Token {
 }
 
 const isNumberChar = (char: string): boolean => (char >= '0' && char <= '9') || char === '.';
+
+const PUNCTUATION: Record<string, TokenType> = { '(': 'lparen', ')': 'rparen', ',': 'comma' };
 
 export function tokenize(input: string): Token[] {
   const tokens: Token[] = [];
@@ -17,6 +19,9 @@ export function tokenize(input: string): Token[] {
       const start = pos;
       while (pos < input.length && isNumberChar(input[pos])) pos++;
       tokens.push({ type: 'number', text: input.slice(start, pos) });
+    } else if (input[pos] in PUNCTUATION) {
+      tokens.push({ type: PUNCTUATION[input[pos]], text: input[pos] });
+      pos++;
     } else {
       tokens.push({ type: 'operator', text: input[pos] });
       pos++;
