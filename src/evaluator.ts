@@ -21,6 +21,7 @@ export class Evaluator {
 
   evaluate(expr: Expr): number {
     if (expr.type === 'number') return expr.value;
+    if (expr.type === 'binary') return this.evaluate(expr.left) + this.evaluate(expr.right);
     throw new Error(`Cannot evaluate '${expr.type}' nodes yet`);
   }
 }
