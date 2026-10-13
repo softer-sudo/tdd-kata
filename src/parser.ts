@@ -18,6 +18,14 @@ export function parse(tokens: Token[]): Expr {
     return { type: 'number', value: Number(token.text) };
   };
 
+  const parseUnary = (): Expr => {
+    if (tokens[pos]?.text === '-') {
+      pos++;
+      return { type: 'unary', op: '-', operand: parseUnary() };
+    }
+    return parsePrimary();
+  };
+
   // Left-associative chain of `operand (op operand)*` for the given operators.
   const parseChain = (ops: string[], parseOperand: () => Expr): Expr => {
     let left = parseOperand();
@@ -28,7 +36,7 @@ export function parse(tokens: Token[]): Expr {
     return left;
   };
 
-  const parseTerm = (): Expr => parseChain(['*', '/'], parsePrimary);
+  const parseTerm = (): Expr => parseChain(['*', '/'], parseUnary);
   const parseExpression = (): Expr => parseChain(['+', '-'], parseTerm);
 
   return parseExpression();
