@@ -9,6 +9,7 @@ const logger: jest.Mocked<Logger> = { debug: jest.fn(), warn: jest.fn() };
 const n = (value: number): Expr => ({ type: 'number', value });
 const bin = (op: BinaryOp, left: Expr, right: Expr): Expr => ({ type: 'binary', op, left, right });
 const neg = (operand: Expr): Expr => ({ type: 'unary', op: '-', operand });
+const call = (name: string, ...args: Expr[]): Expr => ({ type: 'call', name, args });
 
 let evaluator: Evaluator;
 
@@ -40,5 +41,16 @@ describe('Evaluator', () => {
 
   it('negates the operand of a unary minus', () => {
     expect(evaluator.evaluate(neg(bin('+', n(2), n(3))))).toBe(-5);
+  });
+
+  it('calls the function found in the injected registry with evaluated arguments', () => {
+    const fn = jest.fn().mockReturnValue(99);
+    registry.get.mockReturnValue(fn);
+
+    const result = evaluator.evaluate(call('f', n(1), bin('+', n(2), n(3))));
+
+    expect(registry.get).toHaveBeenCalledWith('f');
+    expect(fn).toHaveBeenCalledWith(1, 5);
+    expect(result).toBe(99);
   });
 });
