@@ -7,7 +7,15 @@ export type Expr =
 export function parse(tokens: Token[]): Expr {
   let pos = 0;
 
-  const parseNumber = (): Expr => ({ type: 'number', value: Number(tokens[pos++].text) });
+  const parsePrimary = (): Expr => {
+    const token = tokens[pos++];
+    if (token.type === 'lparen') {
+      const inner = parseExpression();
+      pos++; // skip the closing parenthesis
+      return inner;
+    }
+    return { type: 'number', value: Number(token.text) };
+  };
 
   // Left-associative chain of `operand (op operand)*` for the given operators.
   const parseChain = (ops: string[], parseOperand: () => Expr): Expr => {
@@ -19,7 +27,7 @@ export function parse(tokens: Token[]): Expr {
     return left;
   };
 
-  const parseTerm = (): Expr => parseChain(['*', '/'], parseNumber);
+  const parseTerm = (): Expr => parseChain(['*', '/'], parsePrimary);
   const parseExpression = (): Expr => parseChain(['+', '-'], parseTerm);
 
   return parseExpression();
