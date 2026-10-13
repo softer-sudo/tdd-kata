@@ -34,7 +34,7 @@ export function parse(tokens: Token[]): Expr {
           args.push(parseExpression());
         }
       }
-      pos++; // skip the closing parenthesis
+      expectToken('rparen', ')');
       return { type: 'call', name: token.text, args };
     }
     if (token.type === 'number') return { type: 'number', value: Number(token.text) };
