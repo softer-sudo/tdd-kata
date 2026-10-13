@@ -32,4 +32,8 @@ describe('Evaluator', () => {
   ] as const)('applies the %s operator', (op, left, right, expected) => {
     expect(evaluator.evaluate(bin(op, n(left), n(right)))).toBe(expected);
   });
+
+  it('rejects division by zero instead of returning Infinity', () => {
+    expect(() => evaluator.evaluate(bin('/', n(1), n(0)))).toThrow('Division by zero');
+  });
 });
