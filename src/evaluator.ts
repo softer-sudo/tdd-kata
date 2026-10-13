@@ -28,7 +28,10 @@ export class Evaluator {
       case 'call': {
         const fn = this.functions.get(expr.name);
         if (!fn) throw new Error(`Unknown function '${expr.name}'`);
-        return fn(...expr.args.map((arg) => this.evaluate(arg)));
+        const args = expr.args.map((arg) => this.evaluate(arg));
+        const result = fn(...args);
+        this.logger.debug(`${expr.name}(${args.join(', ')}) = ${result}`);
+        return result;
       }
       case 'binary': {
         const left = this.evaluate(expr.left);
