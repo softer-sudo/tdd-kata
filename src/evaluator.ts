@@ -20,23 +20,30 @@ export class Evaluator {
   ) {}
 
   evaluate(expr: Expr): number {
-    if (expr.type === 'number') return expr.value;
-    if (expr.type === 'unary') return -this.evaluate(expr.operand);
-    if (expr.type === 'binary') {
-      const left = this.evaluate(expr.left);
-      const right = this.evaluate(expr.right);
-      switch (expr.op) {
-        case '+':
-          return left + right;
-        case '-':
-          return left - right;
-        case '*':
-          return left * right;
-        case '/':
-          if (right === 0) throw new Error('Division by zero');
-          return left / right;
+    switch (expr.type) {
+      case 'number':
+        return expr.value;
+      case 'unary':
+        return -this.evaluate(expr.operand);
+      case 'call': {
+        const fn = this.functions.get(expr.name)!;
+        return fn(...expr.args.map((arg) => this.evaluate(arg)));
+      }
+      case 'binary': {
+        const left = this.evaluate(expr.left);
+        const right = this.evaluate(expr.right);
+        switch (expr.op) {
+          case '+':
+            return left + right;
+          case '-':
+            return left - right;
+          case '*':
+            return left * right;
+          case '/':
+            if (right === 0) throw new Error('Division by zero');
+            return left / right;
+        }
       }
     }
-    throw new Error(`Cannot evaluate '${expr.type}' nodes yet`);
   }
 }
