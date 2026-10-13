@@ -16,6 +16,16 @@ export function parse(tokens: Token[]): Expr {
       pos++; // skip the closing parenthesis
       return inner;
     }
+    if (token.type === 'ident') {
+      pos++; // skip the opening parenthesis
+      const args = [parseExpression()];
+      while (tokens[pos]?.type === 'comma') {
+        pos++;
+        args.push(parseExpression());
+      }
+      pos++; // skip the closing parenthesis
+      return { type: 'call', name: token.text, args };
+    }
     return { type: 'number', value: Number(token.text) };
   };
 
