@@ -43,4 +43,12 @@ describe('tokenize', () => {
       { type: 'rparen', text: ')' },
     ]);
   });
+
+  it.each(['+', '-', '*', '/'])('accepts %s as an operator', (op) => {
+    expect(tokenize(op)).toEqual([{ type: 'operator', text: op }]);
+  });
+
+  it('rejects a character that is not part of the grammar, reporting where', () => {
+    expect(() => tokenize('2 $ 3')).toThrow("Unexpected character '$' at position 2");
+  });
 });
