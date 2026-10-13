@@ -8,11 +8,11 @@ export interface CalculatorDeps {
   evaluator: Pick<Evaluator, 'evaluate'>;
 }
 
-// Compile-only stub: gives the first calculator test something to fail against.
 export class Calculator {
   constructor(private readonly deps: CalculatorDeps) {}
 
-  calculate(_input: string): number {
-    return 0;
+  calculate(input: string): number {
+    const { tokenize, parse, evaluator } = this.deps;
+    return evaluator.evaluate(parse(tokenize(input)));
   }
 }
