@@ -88,4 +88,8 @@ describe('parse', () => {
   it("requires ')' to close a call's argument list", () => {
     expect(() => parse([ident('max'), lparen, num('1')])).toThrow("Expected ')' but reached end of input");
   });
+
+  it("requires '(' after a function name since there are no variables", () => {
+    expect(() => parse([ident('x'), num('1')])).toThrow("Expected '(' but found '1'");
+  });
 });
