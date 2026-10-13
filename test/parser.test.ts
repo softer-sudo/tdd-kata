@@ -28,4 +28,10 @@ describe('parse', () => {
       bin('-', bin('-', n(1), n(2)), n(3)),
     );
   });
+
+  it('binds * tighter than +', () => {
+    expect(parse([num('1'), op('+'), num('2'), op('*'), num('3')])).toEqual(
+      bin('+', n(1), bin('*', n(2), n(3))),
+    );
+  });
 });
