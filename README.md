@@ -51,7 +51,7 @@ The rule: **no production code without a failing test first.** Each behaviour we
 | `green:` | The smallest production change that makes it pass | all green |
 | `refactor:` | Cleanup only, no new behaviour, no test changes beyond types | all green |
 
-The history has 37 `red`, 37 `green` and 4 `refactor` commits (plus a scaffold and a coverage-threshold `chore`). The first tokenizer cycles read like this:
+The history has 37 `red`, 37 `green` and 5 `refactor` commits (plus a scaffold, a coverage-threshold `chore` and the README itself). The first tokenizer cycles read like this:
 
 ```
 red:      tokenizer turns an integer into a number token
