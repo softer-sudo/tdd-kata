@@ -24,4 +24,14 @@ describe('tokenize', () => {
   it('keeps a decimal point inside a number token', () => {
     expect(tokenize('3.14')).toEqual([{ type: 'number', text: '3.14' }]);
   });
+
+  it('gives parentheses and commas their own token types', () => {
+    expect(tokenize('(1,2)')).toEqual([
+      { type: 'lparen', text: '(' },
+      { type: 'number', text: '1' },
+      { type: 'comma', text: ',' },
+      { type: 'number', text: '2' },
+      { type: 'rparen', text: ')' },
+    ]);
+  });
 });
