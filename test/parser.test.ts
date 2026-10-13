@@ -72,4 +72,8 @@ describe('parse', () => {
   it('rejects a token that cannot start an operand', () => {
     expect(() => parse([op('*'), num('2')])).toThrow("Unexpected token '*'");
   });
+
+  it('rejects tokens left over after a complete expression', () => {
+    expect(() => parse([num('1'), num('2')])).toThrow("Unexpected token '2'");
+  });
 });
